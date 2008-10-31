@@ -1,0 +1,11 @@
+2008-10-31 Dmitry Dulepov [netcreators]  <dmitry@typo3.org>
+
+	* Fixed bug: link to next page shown if current page is greater than maximum pages
+
+2008-07-19 Dmitry Dulepov [netcreators]  <dmitry@typo3.org>
+
+	* Fixed bug: header data is not added
+
+2008-07-18 Dmitry Dulepov [netcreators]  <dmitry@typo3.org>
+
+	* initial code generated with kickstarter

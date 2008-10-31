@@ -1,0 +1,49 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+		<langChildren>0</langChildren>
+	</meta>
+	<ROOT>
+		<TCEforms>
+			<sheetTitle>LLL:EXT:pagebrowse/pi1/locallang.xml:sheet.general</sheetTitle>
+			<!--
+			<cshFile>LLL:EXT:pagebrowse/pi1/locallang_csh.xml</cshFile>
+			-->
+		</TCEforms>
+		<type>array</type>
+		<el>
+			<pageParamName>
+				<TCEforms>
+				<label>LLL:EXT:pagebrowse/pi1/locallang.xml:tt_content.tx_pagebrowse_pi1.pageParamName</label>
+				<config>
+					<type>input</type>
+					<eval>lower</eval>
+				</config>
+				</TCEforms>
+			</pageParamName>
+			<templateFile>
+				<TCEforms>
+					<label>LLL:EXT:pagebrowse/pi1/locallang.xml:tt_content.tx_pagebrowse_pi1.template_file</label>
+					<config>
+						<type>input</type>
+						<eval>trim</eval>
+						<default></default>
+						<wizards type="array">
+							<_PADDING>2</_PADDING>
+							<link type="array">
+								<type>popup</type>
+								<title>Link</title>
+								<icon>link_popup.gif</icon>
+								<script>browse_links.php?mode=wizard&amp;act=file</script>
+								<params type="array">
+									<blindLinkOptions>page,url,mail,spec</blindLinkOptions>
+								</params>
+								<JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+							</link>
+						</wizards>
+					</config>
+				</TCEforms>
+			</templateFile>
+		</el>
+	</ROOT>
+</T3DataStructure>

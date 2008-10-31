@@ -1,0 +1,4 @@
+plugin.tx_pagebrowse_pi1 {
+	# cat=plugin.tx_pagebrowse_pi1; type=string; label=Template file
+	templateFile = EXT:pagebrowse/res/template.html
+}

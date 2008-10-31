@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>Language labels for comments</description>
+		<type>module</type>
+		<csh_table></csh_table>
+		<fileId>EXT:comments/locallang.xml</fileId>
+		<labelContext type="array">
+		</labelContext>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tt_content.list_type_pi1">Page browser</label>
+			<label index="no_ts_template">Extension "pagebrowse": please, add extension TypoScript template to the main TypoScript template.</label>
+			<label index="text_first">&lt;&lt;First</label>
+			<label index="text_prev">&lt;Previous</label>
+			<label index="text_next">Next&gt;</label>
+			<label index="text_last">Last&gt;&gt;</label>
+			<label index="tt_content.tx_pagebrowse_pi1.pageParamName">Page parameter name:</label>
+			<label index="tt_content.tx_pagebrowse_pi1.templateFile">Template file:</label>
+		</languageKey>
+	</data>
+</T3locallang>
