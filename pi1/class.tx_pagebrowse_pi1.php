@@ -173,7 +173,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 				$subPartMarkers['###INACTIVE_FIRST###'] = '';
 			}
 			// Prev page link
-			if ($this->currentPage >= 0) {
+			if ($this->currentPage == 0) {
 				$subPartMarkers['###ACTIVE_PREV###'] = '';
 			}
 			else {
