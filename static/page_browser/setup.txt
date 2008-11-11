@@ -3,7 +3,7 @@
 plugin.tx_pagebrowse_pi1 = USER
 plugin.tx_pagebrowse_pi1 {
 	# USER_INT support
-	includeLibs = EXT:pagebrowse/class.tx_pagebrowser_pi1.php
+	includeLibs = EXT:pagebrowse/pi1/class.tx_pagebrowse_pi1.php
 	userFunc = tx_pagebrowse_pi1->main
 
 	# Template file
