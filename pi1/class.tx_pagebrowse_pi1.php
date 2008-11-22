@@ -52,6 +52,14 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 	protected $pagesBefore = 3;
 	protected $pagesAfter = 3;
 
+	const PAGE_FIRST = 0;
+	const PAGE_PREV = 1;
+	const PAGE_BEFORE = 2;
+	const PAGE_CURRENT = 3;
+	const PAGE_AFTER = 4;
+	const PAGE_NEXT = 5;
+	const PAGE_LAST = 6;
+
 	/**
 	 * Produces plugin's output.
 	 *
@@ -169,7 +177,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 				$subPartMarkers['###ACTIVE_FIRST###'] = '';
 			}
 			else {
-				$markers['###FIRST_LINK###'] = $this->getPageLink(0);
+				$markers['###FIRST_LINK###'] = $this->getPageLink(0, self::PAGE_FIRST);
 				$subPartMarkers['###INACTIVE_FIRST###'] = '';
 			}
 			// Prev page link
@@ -177,7 +185,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 				$subPartMarkers['###ACTIVE_PREV###'] = '';
 			}
 			else {
-				$markers['###PREV_LINK###'] = $this->getPageLink($this->currentPage - 1);
+				$markers['###PREV_LINK###'] = $this->getPageLink($this->currentPage - 1, self::PAGE_PREV);
 				$subPartMarkers['###INACTIVE_PREV###'] = '';
 			}
 			// Next link
@@ -185,7 +193,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 				$subPartMarkers['###ACTIVE_NEXT###'] = '';
 			}
 			else {
-				$markers['###NEXT_LINK###'] = $this->getPageLink($this->currentPage + 1);
+				$markers['###NEXT_LINK###'] = $this->getPageLink($this->currentPage + 1, self::PAGE_NEXT);
 				$subPartMarkers['###INACTIVE_NEXT###'] = '';
 			}
 			// Last link
@@ -193,7 +201,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 				$subPartMarkers['###ACTIVE_LAST###'] = '';
 			}
 			else {
-				$markers['###LAST_LINK###'] = $this->getPageLink($this->numberOfPages - 1);
+				$markers['###LAST_LINK###'] = $this->getPageLink($this->numberOfPages - 1, self::PAGE_LAST);
 				$subPartMarkers['###INACTIVE_LAST###'] = '';
 			}
 			// Page links
@@ -204,10 +212,12 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 			$end = min($this->numberOfPages, $this->currentPage + $this->pagesAfter + 1);
 			for ($i = $start; $i < $end; $i++) {
 				$template = ($i == $this->currentPage ? $actPageLinkSubPart : $inactPageLinkSubPart);
+				$pageType = ($i < $this->currentPage ? self::PAGE_BEFORE :
+					($i > $this->currentPage ? self::PAGE_AFTER : self::PAGE_CURRENT));
 				$localMarkers = array(
 					'###NUMBER###' => $i,
 					'###NUMBER_DISPLAY###' => $i + 1,
-					'###LINK###' => $this->getPageLink($i),
+					'###LINK###' => $this->getPageLink($i, $pageType),
 				);
 				$pageLinks .= $this->cObj->substituteMarkerArray($template, $localMarkers);
 			}
@@ -236,9 +246,10 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 	 * Generates page link. Keeps all current URL parameters except for cHash and tx_pagebrowse_pi1[page].
 	 *
 	 * @param	int		$page	Page number starting from 1
+	 * @param	int		$pageType	One of PAGE_xxx constants
 	 * @return	string		Generated link
 	 */
-	protected function getPageLink($page) {
+	protected function getPageLink($page, $pageType) {
 		// Prepare query string. We do both urlencoded and non-encoded version
 		// because older TYPO3 versions use unencoded parameter names
 		$queryConf = array(
@@ -268,6 +279,8 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 				$params = array(
 					'pObj' => &$this,
 					'additionalParameters' => $additionalParams,
+					'pageType' => $pageType,
+					'pageNumber' => $page,
 				);
 				$additionalParams = t3lib_div::callUserFunction($userFunc, $params, $this);
 			}
