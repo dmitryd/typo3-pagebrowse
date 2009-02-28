@@ -257,7 +257,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 							rawurlencode($this->pageParameterName) .
 							',cHash',
 		);
-		$additionalParams = $this->cObj->getQueryArguments($queryConf);
+		$additionalParams = urldecode($this->cObj->getQueryArguments($queryConf));
 
 		// Add page number
 		if ($page > 0) {
