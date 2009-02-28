@@ -1,0 +1,4 @@
+.tx-pagebrowse{text-align:center;list-style:none inside none;width:100%;margin:0;padding:0}
+.tx-pagebrowse li{display:inline;list-style:none;margin:0;padding:0 5px 0 0}
+li.tx-pagebrowse-pages{width:80%}
+li.tx-pagebrowse-pages ol{display:inline;margin:0;padding:0 10px}
