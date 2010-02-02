@@ -1,6 +1,11 @@
+2010-02-02  Dmitry Dulepov  <dmitry.dulepov+typo3svn@gmail.com>
+
+	* Committed some fixes made for clients
+
 2009-02-28  Dmitry Dulepov  <dmitry@typo3.org>
 
 	* Added minified version of CSS styles
+	* Added urldecode() to fix some older TYPO3 versions
 
 2008-11-21  Dmitry Dulepov  <dmitry@typo3.org>
 

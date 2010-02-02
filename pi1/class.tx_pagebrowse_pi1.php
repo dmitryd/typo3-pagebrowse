@@ -122,7 +122,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 
 		// Call post-init hook
 		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['postInit'])) {
-			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['preInit'] as $userFunc) {
+			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['postInit'] as $userFunc) {
 				$params = array(
 					'pObj' => &$this,
 				);
@@ -204,6 +204,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 				$markers['###LAST_LINK###'] = $this->getPageLink($this->numberOfPages - 1, self::PAGE_LAST);
 				$subPartMarkers['###INACTIVE_LAST###'] = '';
 			}
+
 			// Page links
 			$actPageLinkSubPart = trim($this->cObj->getSubpart($subPart, '###CURRENT###'));
 			$inactPageLinkSubPart = trim($this->cObj->getSubpart($subPart, '###PAGE###'));
@@ -219,10 +220,21 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 					'###NUMBER_DISPLAY###' => $i + 1,
 					'###LINK###' => $this->getPageLink($i, $pageType),
 				);
+				if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['pageLinkMarkers'])) {
+					foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['pageLinkMarkers'] as $userFunc) {
+						$params = array(
+							'markers' => &$localMarkers,
+							'page' => $i,
+							'pObj' => &$this
+						);
+						t3lib_div::callUserFunction($userFunc, $params, $this);
+					}
+				}
 				$pageLinks .= $this->cObj->substituteMarkerArray($template, $localMarkers);
 			}
 			$subPartMarkers['###PAGE###'] = $pageLinks;
 			$subPartMarkers['###CURRENT###'] = '';
+
 			// Less pages part
 			if ($start == 0 || !$this->conf['enableLessPages']) {
 				$subPartMarkers['###LESS_PAGES###'] = '';
@@ -232,6 +244,21 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 				// We have all pages covered. Remove this part.
 				$subPartMarkers['###MORE_PAGES###'] = '';
 			}
+
+			// Extra markers hook
+			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['additionalMarkers'])) {
+				foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['additionalMarkers'] as $userFunc) {
+					$params = array(
+						'currentPage' => $this->currentPage,
+						'markers' => &$markers,
+						'numberOfPages' => $this->numberOfPages,
+						'pObj' => &$this,
+						'subparts' => &$subPartMarkers
+					);
+					t3lib_div::callUserFunction($userFunc, $params, $this);
+				}
+			}
+
 			// Compile all together
 			$out = $this->cObj->substituteMarkerArrayCached($subPart, $markers, $subPartMarkers);
 			// Remove all comments
