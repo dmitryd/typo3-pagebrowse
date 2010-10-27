@@ -112,12 +112,16 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 				$this->currentPage = max(0, intval(t3lib_div::_GP($pageParameterName)));
 			}
 		}
+
 		if (t3lib_div::testInt($this->conf['pagesBefore'])) {
 			$this->pagesBefore = intval($this->conf['pagesBefore']);
 		}
 		if (t3lib_div::testInt($this->conf['pagesAfter'])) {
 			$this->pagesAfter = intval($this->conf['pagesAfter']);
 		}
+
+		$this->adjustForForcedNumberOfLinks();
+
 		$this->templateCode = $this->cObj->fileResource($this->conf['templateFile']);
 
 		// Call post-init hook
@@ -131,6 +135,38 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 		}
 
 		$this->addHeaderParts();
+	}
+
+	/**
+	 * If a certain number of links should be displayed, adjust before and after
+	 * amounts accordingly.
+	 *
+	 * @return void
+	 */
+	protected function adjustForForcedNumberOfLinks() {
+		$forcedNumberOfLinks = intval($this->cObj->stdWrap($this->conf['numberOfLinks'], $this->conf['numberOfLinks.']));
+		if ($forcedNumberOfLinks > $this->numberOfPages) {
+			$forcedNumberOfLinks = $this->numberOfPages;
+		}
+		$totalNumberOfLinks = min($this->currentPage, $this->pagesBefore) +
+				min($this->pagesAfter, $this->numberOfPages - $this->currentPage) + 1;
+		if ($totalNumberOfLinks <= $forcedNumberOfLinks) {
+			$delta = intval(ceil(($forcedNumberOfLinks - $totalNumberOfLinks)/2));
+			$incr = ($forcedNumberOfLinks & 1) == 0 ? 1 : 0;
+			if ($this->currentPage - ($this->pagesBefore + $delta) < 1) {
+				// Too little from the right to adjust
+				$this->pagesAfter = $forcedNumberOfLinks - $this->currentPage - 1;
+				$this->pagesBefore = $forcedNumberOfLinks - $this->pagesAfter - 1;
+			}
+			elseif ($this->currentPage + ($this->pagesAfter + $delta) >= $this->numberOfPages) {
+				$this->pagesBefore = $forcedNumberOfLinks - ($this->numberOfPages - $this->currentPage);
+				$this->pagesAfter = $forcedNumberOfLinks - $this->pagesBefore - 1;
+			}
+			else {
+				$this->pagesBefore += $delta;
+				$this->pagesAfter += $delta - $incr;
+			}
+		}
 	}
 
 	/**
