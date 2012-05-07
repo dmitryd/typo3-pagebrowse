@@ -19,7 +19,7 @@ plugin.tx_pagebrowse_pi1 {
 	pagesAfter = 3
 
 	# GET variable name for page pointer. Examples: "page" or "tx_exykey_pi1|page". Notice that array separator is pipe (one level only!)
-	pageParamName = tx_pagebrowse_pi1|page
+	pageParameterName = tx_pagebrowse_pi1|page
 
 	# Enables section for "more" pages. This section is shown after links to next pages, normally like three dots (1 2 3 ...). Notice that you can also hide it by emptying corresponding template section.
 	enableMorePages = 1
