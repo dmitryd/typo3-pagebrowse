@@ -113,10 +113,10 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 			}
 		}
 
-		if (t3lib_div::testInt($this->conf['pagesBefore'])) {
+		if (self::testInt($this->conf['pagesBefore'])) {
 			$this->pagesBefore = intval($this->conf['pagesBefore']);
 		}
-		if (t3lib_div::testInt($this->conf['pagesAfter'])) {
+		if (self::testInt($this->conf['pagesAfter'])) {
 			$this->pagesAfter = intval($this->conf['pagesAfter']);
 		}
 
@@ -355,6 +355,23 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 			'useCacheHash' => (strlen($additionalParams) > 1) && !$this->conf['disableCacheHash'],
 		);
 		return htmlspecialchars($this->cObj->typoLink_URL($conf));
+	}
+
+	/**
+	 * Tests if the value can be interpreted as integer.
+	 *
+	 * @param mixed $value
+	 * @return bool
+	 */
+	static protected function testInt($value) {
+		if (class_exists('\\TYPO3\\CMS\\Core\\Utility\\MathUtility')) {
+			$result = \TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($value);
+		} elseif (class_exists('t3lib_utility_Math')) {
+			$result = t3lib_utility_Math::canBeInterpretedAsInteger($value);
+		} else {
+			$result = t3lib_div::testInt($value);
+		}
+		return $result;
 	}
 }
 

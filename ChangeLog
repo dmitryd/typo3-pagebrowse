@@ -1,3 +1,7 @@
+2013-02-12  Dmitry Dulepov  <dmitry.dulepov@gmail.com>
+
+	* Fixed bug #32093: Usage of deprecated testInt method
+
 2012-05-14  Dmitry Dulepov  <dmitry.dulepov@gmail.com>
 
 	* Fixed bug #6351: Plugin element displays 'Data Structure ERROR'
