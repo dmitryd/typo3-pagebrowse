@@ -1,6 +1,7 @@
 2013-02-12  Dmitry Dulepov  <dmitry.dulepov@gmail.com>
 
 	* Fixed bug #32093: Usage of deprecated testInt method
+	* Released version 1.3.3
 
 2012-05-14  Dmitry Dulepov  <dmitry.dulepov@gmail.com>
 
