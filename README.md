@@ -1,8 +1,8 @@
-= Universal page browser for TYPO3 CMS =
+# Universal page browser for TYPO3 CMS
 
 This is a "universal page browser for TYPO3 CMS" extension. It allows TYPO3 extension developers to easily build a page browser into their extensions.
 
-== What does it do? ==
+## What does it do?
 
 It provides the API to create a page browser. Developers need to supply the following parameters:
 + current page
@@ -30,12 +30,12 @@ protected function getListGetPageBrowser($numberOfPages) {
 
 See the manual at doc/manual.sxw for more information and a list of all available options.
 
-== Notes ==
+## Notes
 
 This extension was built in "pibase" times and it does not support recent TYPO3 technologies (such as Extbase or FLUID). However it is still the most lightweight and simple page browser for TYPO3 around.
 
 This code is old. It is quite clean but not as clean as I would prefer now. However it is stable and used in production on many sites that use TYPO3.
 
-== Contacts ==
+## Contacts
 
 E-mail: dmitry.dulepov@gmail.com
