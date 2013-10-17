@@ -31,7 +31,6 @@
  * @author	Dmitry Dulepov [netcreators] <dmitry@typo3.org>
  */
 
-require_once(PATH_tslib . 'class.tslib_pibase.php');
 
 /**
  * This class implements page browser plugin
