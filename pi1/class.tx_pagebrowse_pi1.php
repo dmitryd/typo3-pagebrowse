@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Dmitry Dulepov (dmitry@typo3.org)
+*  (c) 2008-2014 Dmitry Dulepov (dmitry@typo3.org)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,14 +24,6 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-
-/**
- * This file contains a class with page browser implementation.
- *
- * @author	Dmitry Dulepov [netcreators] <dmitry@typo3.org>
- */
-
-require_once(PATH_tslib . 'class.tslib_pibase.php');
 
 /**
  * This class implements page browser plugin
@@ -59,6 +51,8 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 	const PAGE_AFTER = 4;
 	const PAGE_NEXT = 5;
 	const PAGE_LAST = 6;
+
+	protected $templateCode;
 
 	/**
 	 * Produces plugin's output.
@@ -173,9 +167,6 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 	 * Adds header parts from the template to the TSFE.
 	 * It fetches subpart identified by ###HEADER_ADDITIONSS### and replaces ###SITE_REL_PATH### with site-relative part to the extension.
 	 *
-	 * @param	string		$ref	Reference
-	 * @param	string		$subpart	Subpart from template to add.
-	 * @param	array		$conf	Configuration
 	 * @return	void
 	 */
 	protected function addHeaderParts() {
@@ -317,8 +308,8 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 		// because older TYPO3 versions use unencoded parameter names
 		$queryConf = array(
 			'exclude' => $this->pageParameterName . ',' .
-							rawurlencode($this->pageParameterName) .
-							',cHash',
+				rawurlencode($this->pageParameterName) .
+				',cHash',
 		);
 		$additionalParams = urldecode($this->cObj->getQueryArguments($queryConf));
 
@@ -375,8 +366,8 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 	}
 }
 
+/** @noinspection PhpUndefinedVariableInspection */
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pagebrowse/pi1/class.tx_pagebrowse_pi1.php'])	{
+	/** @noinspection PhpIncludeInspection */
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pagebrowse/pi1/class.tx_pagebrowse_pi1.php']);
 }
-
-?>
