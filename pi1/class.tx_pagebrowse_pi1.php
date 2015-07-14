@@ -32,6 +32,7 @@
  */
 
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * This class implements page browser plugin
  *
@@ -50,6 +51,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 	protected $currentPage;
 	protected $pagesBefore = 3;
 	protected $pagesAfter = 3;
+	protected $templateCode;
 
 	const PAGE_FIRST = 0;
 	const PAGE_PREV = 1;
@@ -90,7 +92,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 				$params = array(
 					'pObj' => &$this,
 				);
-				t3lib_div::callUserFunction($userFunc, $params, $this);
+				GeneralUtility::callUserFunction($userFunc, $params, $this);
 			}
 		}
 
@@ -100,15 +102,15 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 			$this->currentPage = max(0, intval($this->piVars['page']));
 		}
 		else {
-			$parts = t3lib_div::trimExplode('|', $pageParameterName, 2);
+			$parts = GeneralUtility::trimExplode('|', $pageParameterName, 2);
 			if (count($parts) == 2) {
 				$this->pageParameterName = $parts[0] . '[' . $parts[1] . ']';
-				$vars = t3lib_div::_GP($parts[0]);
+				$vars = GeneralUtility::_GP($parts[0]);
 				$this->currentPage = max(0, intval($vars[$parts[1]]));
 			}
 			else {
 				$this->pageParameterName = $pageParameterName;
-				$this->currentPage = max(0, intval(t3lib_div::_GP($pageParameterName)));
+				$this->currentPage = max(0, intval(GeneralUtility::_GP($pageParameterName)));
 			}
 		}
 
@@ -129,7 +131,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 				$params = array(
 					'pObj' => &$this,
 				);
-				t3lib_div::callUserFunction($userFunc, $params, $this);
+				GeneralUtility::callUserFunction($userFunc, $params, $this);
 			}
 		}
 
@@ -184,7 +186,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 			$GLOBALS['TSFE']->additionalHeaderData[$key] =
 				$this->cObj->substituteMarkerArray($subPart, array(
 					'###SITE_REL_PATH###' => $GLOBALS['TSFE']->config['config']['absRefPrefix'] .
-						t3lib_extMgm::siteRelPath($this->extKey),
+						\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath($this->extKey),
 				));
 		}
 	}
@@ -262,7 +264,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 							'page' => $i,
 							'pObj' => &$this
 						);
-						t3lib_div::callUserFunction($userFunc, $params, $this);
+						GeneralUtility::callUserFunction($userFunc, $params, $this);
 					}
 				}
 				$pageLinks .= $this->cObj->substituteMarkerArray($template, $localMarkers);
@@ -290,7 +292,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 						'pObj' => &$this,
 						'subparts' => &$subPartMarkers
 					);
-					t3lib_div::callUserFunction($userFunc, $params, $this);
+					GeneralUtility::callUserFunction($userFunc, $params, $this);
 				}
 			}
 
@@ -344,7 +346,7 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 					'pageType' => $pageType,
 					'pageNumber' => $page,
 				);
-				$additionalParams = t3lib_div::callUserFunction($userFunc, $params, $this);
+				$additionalParams = GeneralUtility::callUserFunction($userFunc, $params, $this);
 			}
 		}
 		// Assemble typolink configuration
@@ -363,19 +365,6 @@ class tx_pagebrowse_pi1 extends tslib_pibase {
 	 * @return bool
 	 */
 	static protected function testInt($value) {
-		if (class_exists('\\TYPO3\\CMS\\Core\\Utility\\MathUtility')) {
-			$result = \TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($value);
-		} elseif (class_exists('t3lib_utility_Math')) {
-			$result = t3lib_utility_Math::canBeInterpretedAsInteger($value);
-		} else {
-			$result = t3lib_div::testInt($value);
-		}
-		return $result;
+		return \TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($value);
 	}
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pagebrowse/pi1/class.tx_pagebrowse_pi1.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/pagebrowse/pi1/class.tx_pagebrowse_pi1.php']);
-}
-
-?>
