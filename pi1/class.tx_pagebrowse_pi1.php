@@ -38,7 +38,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @author	Dmitry Dulepov [netcreators] <dmitry@typo3.org>
  */
-class tx_pagebrowse_pi1 extends tslib_pibase {
+class tx_pagebrowse_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 	// Default plugin variables:
 	public $prefixId = 'tx_pagebrowse_pi1';
 	public $scriptRelPath = 'pi1/class.tx_pagebrowse_pi1.php';
