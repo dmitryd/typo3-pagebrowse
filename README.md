@@ -1,5 +1,9 @@
 # Universal page browser for TYPO3 CMS
 
+**WARNING!** This extension is obsolete and will not be updated anymore.
+
+---
+
 This is a "universal page browser for TYPO3 CMS" extension. It allows TYPO3 extension developers to easily build a page browser into their extensions.
 
 ## What does it do?
